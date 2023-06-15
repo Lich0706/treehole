@@ -50,7 +50,7 @@ const defaultMetaTags = {
   image: '/cover.png',
   description: 'Starter kit for modern web applications',
 };
-const giphy404 = 'https://giphy.com/embed/xTiN0L7EW5trfOvEk0';
+// const giphy404 = 'https://giphy.com/embed/xTiN0L7EW5trfOvEk0';
 
 export {
   loader,
@@ -61,5 +61,5 @@ export {
   email,
   title,
   defaultMetaTags,
-  giphy404,
+  // giphy404,
 };
