@@ -30,7 +30,3 @@ There are two more scripts:
 - `https-preview` is the same, but with HTTPS. It's handy for testing your PWA capabilities in your local environment.
 
 ## [Live Demo](https://react-pwa.surenatoyan.com/)
-
-<div>
- <img src="./public/demo-dark.png" width="280" title="Dark demo"> <img src="./public/demo-light.png" width="280" title="Light demo">
-</div>

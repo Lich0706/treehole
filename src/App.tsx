@@ -7,7 +7,7 @@ import { withErrorHandler } from '@/error-handling';
 import AppErrorBoundaryFallback from '@/error-handling/fallbacks/App';
 import Pages from '@/routes/Pages';
 import Header from '@/sections/Header';
-import HotKeys from '@/sections/HotKeys';
+// import HotKeys from '@/sections/HotKeys';
 import Notifications from '@/sections/Notifications';
 import SW from '@/sections/SW';
 import Sidebar from '@/sections/Sidebar';
@@ -17,7 +17,7 @@ function App() {
     <Fragment>
       <CssBaseline />
       <Notifications />
-      <HotKeys />
+      {/* <HotKeys /> */}
       <SW />
       <BrowserRouter>
         <Header />

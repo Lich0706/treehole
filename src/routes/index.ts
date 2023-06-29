@@ -1,47 +1,32 @@
-import AddTaskIcon from '@mui/icons-material/AddTask';
-import BugReportIcon from '@mui/icons-material/BugReport';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import HomeIcon from '@mui/icons-material/Home';
-import TerrainIcon from '@mui/icons-material/Terrain';
+// import AddTaskIcon from '@mui/icons-material/AddTask';
+// import BugReportIcon from '@mui/icons-material/BugReport';
+import CreateIcon from '@mui/icons-material/Edit';
+import ForestIcon from '@mui/icons-material/Forest';
+import QuizIcon from '@mui/icons-material/Quiz';
 
+// import TerrainIcon from '@mui/icons-material/Terrain';
 import asyncComponentLoader from '@/utils/loader';
 
 import { Pages, Routes } from './types';
 
 const routes: Routes = {
-  [Pages.Welcome]: {
-    component: asyncComponentLoader(() => import('@/pages/Welcome')),
+  [Pages.TreeHole]: {
+    component: asyncComponentLoader(() => import('@/pages/TreeHole')),
     path: '/',
-    title: 'Welcome',
-    icon: HomeIcon,
+    title: '树洞',
+    icon: ForestIcon,
   },
   [Pages.Page1]: {
     component: asyncComponentLoader(() => import('@/pages/Page1')),
     path: '/page-1',
     title: 'Page 1',
-    icon: GitHubIcon,
+    icon: QuizIcon,
   },
-  [Pages.Page2]: {
-    component: asyncComponentLoader(() => import('@/pages/Page2')),
-    path: '/page-2',
-    title: 'Page 2',
-    icon: AddTaskIcon,
-  },
-  [Pages.Page3]: {
-    component: asyncComponentLoader(() => import('@/pages/Page3')),
-    path: '/page-3',
-    title: 'Page 3',
-    icon: TerrainIcon,
-  },
-  [Pages.Page4]: {
-    component: asyncComponentLoader(() => import('@/pages/Page4')),
-    path: '/page-4',
-    title: 'Page 4',
-    icon: BugReportIcon,
-  },
-  [Pages.NotFound]: {
-    component: asyncComponentLoader(() => import('@/pages/NotFound')),
-    path: '*',
+  [Pages.CreateMessage]: {
+    component: asyncComponentLoader(() => import('@/pages/CreateMessage')),
+    path: '/create',
+    title: '创建',
+    icon: CreateIcon,
   },
 };
 

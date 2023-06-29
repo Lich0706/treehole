@@ -1,7 +1,7 @@
 {
-  "name": "React PWA",
-  "short_name": "reactpwa",
-  "description": "Starter kit for modern web applications",
+  "name": "六度",
+  "short_name": "six_degrees",
+  "description": "(Waited to be changed) Starter kit for modern web applications",
   "theme_color": "#ffffff",
   "icons": [
     {
