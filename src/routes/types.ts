@@ -5,12 +5,9 @@ import type { SvgIconProps } from '@mui/material/SvgIcon';
 
 enum Pages {
   TreeHole,
-  Page1,
   CreateMessage,
-  // Page2,
-  // Page3,
-  // Page4,
-  // NotFound,
+  SignUp,
+  LogIn,
 }
 
 type PathRouteCustomProps = {

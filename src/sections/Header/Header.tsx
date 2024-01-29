@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import ProfileIcon from '@mui/icons-material/AccountCircle';
 import ThemeIcon from '@mui/icons-material/DarkMode';
 import CreateIcon from '@mui/icons-material/Edit';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 // import Alert from '@mui/material/Alert';
 // import AlertTitle from '@mui/material/AlertTitle';
 import AppBar from '@mui/material/AppBar';
@@ -12,7 +13,7 @@ import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
-import Tooltip from '@mui/material/Tooltip';
+// import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
 import { FlexBox } from '@/components/styled';
@@ -22,9 +23,14 @@ import { title } from '@/config';
 // import useSidebar from '@/store/sidebar';
 import useTheme from '@/store/theme';
 
+// import { useState } from 'react';
+
 function Header() {
   // const [, sidebarActions] = useSidebar();
   const [, themeActions] = useTheme();
+
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+
   // const [, notificationsActions] = useNotifications();
   // const [, hotKeysDialogActions] = useHotKeysDialog();
 
@@ -53,16 +59,6 @@ function Header() {
       <AppBar color="transparent" elevation={1} position="static">
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           <FlexBox sx={{ alignItems: 'center' }}>
-            {/* <IconButton
-              onClick={sidebarActions.toggle}
-              size="large"
-              edge="start"
-              color="info"
-              aria-label="menu"
-              sx={{ mr: 1 }}
-            >
-              <MenuIcon />
-            </IconButton> */}
             <Button component={Link} to="/" color="info">
               <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: '#0288d1' }}>
                 {title}
@@ -86,23 +82,25 @@ function Header() {
               </Tooltip>
             </FlexBox>
             <Divider orientation="vertical" flexItem /> */}
-            <Tooltip title="投递树洞" arrow>
+            {isLoggedIn && (
               <IconButton color="info" edge="end" size="large" component={Link} to="/create">
                 <CreateIcon />
               </IconButton>
-            </Tooltip>
+            )}
+            {isLoggedIn && <Divider orientation="vertical" flexItem />}
+            <IconButton color="info" edge="end" size="large" onClick={themeActions.toggle}>
+              <ThemeIcon />
+            </IconButton>
             <Divider orientation="vertical" flexItem />
-            <Tooltip title="切换主题" arrow>
-              <IconButton color="info" edge="end" size="large" onClick={themeActions.toggle}>
-                <ThemeIcon />
-              </IconButton>
-            </Tooltip>
-            <Divider orientation="vertical" flexItem />
-            <Tooltip title="注册登录" arrow>
+            {isLoggedIn ? (
               <IconButton color="info" edge="end" size="large">
                 <ProfileIcon />
               </IconButton>
-            </Tooltip>
+            ) : (
+              <IconButton color="info" edge="end" size="large" component={Link} to="/signup">
+                <PersonAddIcon />
+              </IconButton>
+            )}
           </FlexBox>
         </Toolbar>
       </AppBar>

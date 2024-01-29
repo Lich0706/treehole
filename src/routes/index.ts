@@ -2,7 +2,7 @@
 // import BugReportIcon from '@mui/icons-material/BugReport';
 import CreateIcon from '@mui/icons-material/Edit';
 import ForestIcon from '@mui/icons-material/Forest';
-import QuizIcon from '@mui/icons-material/Quiz';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 // import TerrainIcon from '@mui/icons-material/Terrain';
 import asyncComponentLoader from '@/utils/loader';
@@ -16,11 +16,16 @@ const routes: Routes = {
     title: '树洞',
     icon: ForestIcon,
   },
-  [Pages.Page1]: {
-    component: asyncComponentLoader(() => import('@/pages/Page1')),
-    path: '/page-1',
-    title: 'Page 1',
-    icon: QuizIcon,
+  [Pages.SignUp]: {
+    component: asyncComponentLoader(() => import('@/pages/SignUp')),
+    path: '/signup',
+    title: '注册',
+    icon: PersonAddIcon,
+  },
+  [Pages.LogIn]: {
+    component: asyncComponentLoader(() => import('@/pages/LogIn')),
+    path: '/login',
+    title: '登录',
   },
   [Pages.CreateMessage]: {
     component: asyncComponentLoader(() => import('@/pages/CreateMessage')),
