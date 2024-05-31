@@ -3,17 +3,13 @@ import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-// import { CenteredFlexBox, FullSizeCenteredFlexBox } from '@/components/styled';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-// import useTheme from '@/store/theme';
-
-// import { giphy404, messages } from '@/config';
-// import { messages } from '@/config';
+import { isSignedIn } from '@/utils/cookie';
 
 function TreeHole() {
-  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  const signedIn = isSignedIn();
 
   return (
     <Container sx={{ height: '100%' }}>
@@ -23,7 +19,7 @@ function TreeHole() {
           pb: 6,
         }}
       >
-        {isLoggedIn ? (
+        {signedIn ? (
           <p>LoggedIn</p>
         ) : (
           <Container maxWidth="sm">

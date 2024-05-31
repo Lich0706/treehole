@@ -22,6 +22,7 @@ import { title } from '@/config';
 // import useNotifications from '@/store/notifications';
 // import useSidebar from '@/store/sidebar';
 import useTheme from '@/store/theme';
+import { isSignedIn } from '@/utils/cookie';
 
 // import { useState } from 'react';
 
@@ -29,7 +30,7 @@ function Header() {
   // const [, sidebarActions] = useSidebar();
   const [, themeActions] = useTheme();
 
-  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  const isLoggedIn = isSignedIn();
 
   // const [, notificationsActions] = useNotifications();
   // const [, hotKeysDialogActions] = useHotKeysDialog();
