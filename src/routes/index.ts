@@ -33,6 +33,11 @@ const routes: Routes = {
     title: '创建',
     icon: CreateIcon,
   },
+  [Pages.UserProfile]: {
+    component: asyncComponentLoader(() => import('@/pages/UserProfile')),
+    path: '/userprofile',
+    title: '我的',
+  },
 };
 
 export default routes;

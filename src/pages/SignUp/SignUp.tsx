@@ -27,7 +27,7 @@ export default function SignUp() {
     const data = new FormData(event.currentTarget);
 
     const userInfo = {
-      username: data.get('nickname'),
+      name: data.get('nickname'),
       email: data.get('email'),
       password: data.get('password'),
     };
@@ -40,6 +40,7 @@ export default function SignUp() {
         username: data.username,
       });
       navigate('/');
+      location.reload();
     });
   };
 

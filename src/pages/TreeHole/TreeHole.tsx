@@ -6,6 +6,8 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import Message from '@/components/Message';
+import SearchBar from '@/components/SearchBar';
 import { isSignedIn } from '@/utils/cookie';
 
 function TreeHole() {
@@ -20,7 +22,10 @@ function TreeHole() {
         }}
       >
         {signedIn ? (
-          <p>LoggedIn</p>
+          <Container>
+            <SearchBar />
+            <Message />
+          </Container>
         ) : (
           <Container maxWidth="sm">
             <Typography

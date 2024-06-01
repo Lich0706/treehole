@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Avatar from '@mui/material/Avatar';
@@ -13,16 +14,33 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
+import axios from 'axios';
+
+import { API_BASE_URL } from '@/config/config';
+import { setCookies } from '@/utils/cookie';
+
 // import { createTheme, ThemeProvider } from '@mui/material/styles';
 // import useTheme from '@/store/theme';
 
 export default function LogIn() {
+  const navigate = useNavigate();
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const userInfo = {
       email: data.get('email'),
       password: data.get('password'),
+    };
+
+    // console.log(userInfo);
+    axios.post(`${API_BASE_URL}/user/auth`, userInfo).then((response) => {
+      const data = response.data;
+      setCookies({
+        token: data.token,
+        username: data.username,
+      });
+      navigate('/');
+      location.reload();
     });
   };
 

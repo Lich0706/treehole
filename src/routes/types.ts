@@ -8,6 +8,7 @@ enum Pages {
   CreateMessage,
   SignUp,
   LogIn,
+  UserProfile,
 }
 
 type PathRouteCustomProps = {

@@ -24,36 +24,11 @@ import { title } from '@/config';
 import useTheme from '@/store/theme';
 import { isSignedIn } from '@/utils/cookie';
 
-// import { useState } from 'react';
-
 function Header() {
   // const [, sidebarActions] = useSidebar();
   const [, themeActions] = useTheme();
 
   const isLoggedIn = isSignedIn();
-
-  // const [, notificationsActions] = useNotifications();
-  // const [, hotKeysDialogActions] = useHotKeysDialog();
-
-  // function showNotification() {
-  //   notificationsActions.push({
-  //     options: {
-  //       // Show fully customized notification
-  //       // Usually, to show a notification, you'll use something like this:
-  //       // notificationsActions.push({ message: ... })
-  //       // `message` accepts string as well as ReactNode
-  //       // But you also can use:
-  //       // notificationsActions.push({ options: { content: ... } })
-  //       // to show fully customized notification
-  //       content: (
-  //         <Alert severity="info">
-  //           <AlertTitle>Notification demo (random IT jokes :))</AlertTitle>
-  //           {getRandomJoke()}
-  //         </Alert>
-  //       ),
-  //     },
-  //   });
-  // }
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -94,7 +69,7 @@ function Header() {
             </IconButton>
             <Divider orientation="vertical" flexItem />
             {isLoggedIn ? (
-              <IconButton color="info" edge="end" size="large">
+              <IconButton color="info" edge="end" size="large" component={Link} to="/userprofile">
                 <ProfileIcon />
               </IconButton>
             ) : (
