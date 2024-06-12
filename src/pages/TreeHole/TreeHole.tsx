@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -6,25 +7,54 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
-import Message from '@/components/Message';
+import MessageList from '@/components/MessageList';
 import SearchBar from '@/components/SearchBar';
 import { isSignedIn } from '@/utils/cookie';
 
+interface DataItem {
+  pid: number;
+  content: string;
+  date: string;
+}
+
+const data: DataItem[] = [
+  { pid: 1, content: 'This is the first #2 content', date: '2024-06-01' },
+  { pid: 2, content: 'This is the second content', date: '2024-06-01' },
+  { pid: 3, content: 'Another content here', date: '2024-06-01' },
+  // More content...
+];
+
 function TreeHole() {
   const signedIn = isSignedIn();
+
+  const [searchResults, setSearchResults] = useState(data);
+
+  const handleSearch = (term: string) => {
+    if (term === '') {
+      setSearchResults(data);
+    } else {
+      const results = data.filter(
+        (item) =>
+          item.content.toLowerCase().includes(term.toLowerCase()) ||
+          item.pid.toString().includes(term),
+      );
+      setSearchResults(results);
+    }
+  };
 
   return (
     <Container sx={{ height: '100%' }}>
       <Box
         sx={{
-          pt: 8,
-          pb: 6,
+          pt: 4,
+          pb: 4,
         }}
       >
         {signedIn ? (
           <Container>
-            <SearchBar />
-            <Message />
+            <SearchBar onSearch={handleSearch} onRefresh={() => console.log('refresh')} />
+            <Box sx={{ paddingTop: 4 }} />
+            <MessageList results={searchResults} />
           </Container>
         ) : (
           <Container maxWidth="sm">

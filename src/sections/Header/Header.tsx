@@ -1,9 +1,9 @@
 // import { getRandomJoke } from './utils';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import ProfileIcon from '@mui/icons-material/AccountCircle';
 import ThemeIcon from '@mui/icons-material/DarkMode';
 import CreateIcon from '@mui/icons-material/Edit';
+import LogoutIcon from '@mui/icons-material/Logout';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 // import Alert from '@mui/material/Alert';
 // import AlertTitle from '@mui/material/AlertTitle';
@@ -22,13 +22,23 @@ import { title } from '@/config';
 // import useNotifications from '@/store/notifications';
 // import useSidebar from '@/store/sidebar';
 import useTheme from '@/store/theme';
-import { isSignedIn } from '@/utils/cookie';
+import { isSignedIn, removeCookie } from '@/utils/cookie';
 
 function Header() {
   // const [, sidebarActions] = useSidebar();
   const [, themeActions] = useTheme();
 
   const isLoggedIn = isSignedIn();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    // 清除用户登录状态，可以是localStorage中的token或其他标识
+    removeCookie('token');
+    removeCookie('username');
+    // 重定向到首页
+    navigate('/');
+    location.reload();
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -69,8 +79,8 @@ function Header() {
             </IconButton>
             <Divider orientation="vertical" flexItem />
             {isLoggedIn ? (
-              <IconButton color="info" edge="end" size="large" component={Link} to="/userprofile">
-                <ProfileIcon />
+              <IconButton color="info" edge="end" size="large" onClick={handleLogout}>
+                <LogoutIcon />
               </IconButton>
             ) : (
               <IconButton color="info" edge="end" size="large" component={Link} to="/signup">

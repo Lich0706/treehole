@@ -38,6 +38,11 @@ const routes: Routes = {
     path: '/userprofile',
     title: '我的',
   },
+  [Pages.DetailPost]: {
+    component: asyncComponentLoader(() => import('@/pages/DetailMessage')),
+    path: '/post/:pid',
+    title: '帖子',
+  },
 };
 
 export default routes;

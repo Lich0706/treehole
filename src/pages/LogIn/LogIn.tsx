@@ -2,6 +2,7 @@ import * as React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Alert from '@mui/material/Alert';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -11,6 +12,7 @@ import Grid from '@mui/material/Grid';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
+import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
@@ -24,6 +26,7 @@ import { setCookies } from '@/utils/cookie';
 
 export default function LogIn() {
   const navigate = useNavigate();
+  const [openError, setOpenError] = React.useState(false);
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -33,15 +36,20 @@ export default function LogIn() {
     };
 
     // console.log(userInfo);
-    axios.post(`${API_BASE_URL}/user/auth`, userInfo).then((response) => {
-      const data = response.data;
-      setCookies({
-        token: data.token,
-        username: data.username,
-      });
-      navigate('/');
-      location.reload();
-    });
+    axios.post(`${API_BASE_URL}/user/auth`, userInfo).then(
+      (response) => {
+        console.log(response);
+        setCookies({
+          token: response.data.token,
+          username: response.data.username,
+        });
+        navigate('/');
+        //location.reload();
+      },
+      //   error => {
+      //     console.log("error")
+      // }
+    );
   };
 
   return (
@@ -101,6 +109,11 @@ export default function LogIn() {
           </Grid>
         </Box>
       </Box>
+      <Snackbar open={openError} autoHideDuration={6000} onClose={() => setOpenError(false)}>
+        <Alert onClose={() => setOpenError(false)} severity="error" sx={{ width: '100%' }}>
+          登陆错误：检查邮箱和密码
+        </Alert>
+      </Snackbar>
     </Container>
   );
 }

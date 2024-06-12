@@ -12,6 +12,11 @@ export const getCookie = (key: string) => {
   return cookies.get(key);
 };
 
+export const removeCookie = (key: string) => {
+  const cookies = new Cookies();
+  return cookies.remove(key);
+};
+
 export function isSignedIn() {
   const cookies = new Cookies();
   return cookies.get('token') !== undefined;
