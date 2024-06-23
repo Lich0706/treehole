@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -12,12 +13,12 @@ import Grid from '@mui/material/Grid';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
-import Snackbar from '@mui/material/Snackbar';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 import axios from 'axios';
 
+import Toast from '@/components/Toast/Toast';
 import { API_BASE_URL } from '@/config/config';
 import { setCookies } from '@/utils/cookie';
 
@@ -26,8 +27,17 @@ import { setCookies } from '@/utils/cookie';
 
 export default function LogIn() {
   const navigate = useNavigate();
-  const [openError, setOpenError] = React.useState(false);
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [openError, setOpenError] = useState(false);
+
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState('');
+  const [severity, setSeverity] = useState<'error' | 'warning' | 'info' | 'success'>('error');
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const userInfo = {
@@ -35,21 +45,25 @@ export default function LogIn() {
       password: data.get('password'),
     };
 
-    // console.log(userInfo);
-    axios.post(`${API_BASE_URL}/user/auth`, userInfo).then(
-      (response) => {
-        console.log(response);
-        setCookies({
-          token: response.data.token,
-          username: response.data.username,
-        });
-        navigate('/');
-        //location.reload();
-      },
-      //   error => {
-      //     console.log("error")
-      // }
-    );
+    try {
+      const response = await axios.post(`${API_BASE_URL}/user/auth`, userInfo);
+      // console.log(response);
+      setCookies({
+        token: response.data.token,
+        username: response.data.username,
+      });
+      navigate('/');
+      location.reload();
+      setMessage('登陆成功！');
+      setSeverity('success');
+      setOpen(true);
+    } catch (error) {
+      console.error('An error occurred:', error);
+      // Optionally, you can set a state to show an error message to the user
+      setMessage((error as Error).message);
+      setSeverity('error');
+      setOpen(true);
+    }
   };
 
   return (
@@ -109,11 +123,7 @@ export default function LogIn() {
           </Grid>
         </Box>
       </Box>
-      <Snackbar open={openError} autoHideDuration={6000} onClose={() => setOpenError(false)}>
-        <Alert onClose={() => setOpenError(false)} severity="error" sx={{ width: '100%' }}>
-          登陆错误：检查邮箱和密码
-        </Alert>
-      </Snackbar>
+      <Toast open={open} message={message} severity={severity} handleClose={handleClose} />
     </Container>
   );
 }

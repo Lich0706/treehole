@@ -35,12 +35,14 @@ export default function SignUp() {
     // console.log(userInfo);
     axios.post(`${API_BASE_URL}/user/create`, userInfo).then((response) => {
       const data = response.data;
-      setCookies({
-        token: data.token,
-        username: data.username,
-      });
-      navigate('/');
-      location.reload();
+      if (data.token != undefined) {
+        setCookies({
+          token: data.token,
+          username: data.username,
+        });
+        navigate('/');
+        location.reload();
+      }
     });
   };
 

@@ -3,7 +3,7 @@ import Cookies from 'universal-cookie';
 export const setCookies = (cookiesToSet: { [key: string]: string }) => {
   const cookies = new Cookies();
   Object.keys(cookiesToSet).forEach(function (key) {
-    cookies.set(key, cookiesToSet[key], { path: '/', maxAge: 60 * 60 * 24 * 30 });
+    cookies.set(key, cookiesToSet[key], { path: '/', maxAge: 60 * 60 * 24 * 3 });
   });
 };
 

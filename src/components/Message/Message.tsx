@@ -5,8 +5,10 @@ import { Typography } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
+import { PostItem } from '@/pages/TreeHole/TreeHole';
+
 interface Props {
-  post: any;
+  post: PostItem;
   handleClick?: () => void;
 }
 
@@ -17,7 +19,9 @@ const Message: React.FC<Props> = ({ post, handleClick }) => {
     navigate(`/post/${id}`);
   };
   const regex = /#(\d+)(?=\s|$)/g;
-  const parts = post.content.split(regex);
+  const parts = post.Content.split(regex);
+
+  const dateObj = new Date(post.CreatedAt);
 
   const card = (
     <React.Fragment>
@@ -26,9 +30,9 @@ const Message: React.FC<Props> = ({ post, handleClick }) => {
           sx={{ fontSize: 14 }}
           color="text.secondary"
           gutterBottom
-          onClick={() => handleCardClick(post.pid)}
+          onClick={() => handleCardClick(post.ID)}
         >
-          #{post.pid}
+          #{post.ID}
         </Typography>
         <Typography variant="body1" gutterBottom>
           {parts.map((part: string, index: number) => {
@@ -47,7 +51,7 @@ const Message: React.FC<Props> = ({ post, handleClick }) => {
           })}
         </Typography>
         <Typography sx={{ fontSize: 14 }} color="text.secondary">
-          {post.date}
+          {dateObj.toLocaleDateString()}
         </Typography>
       </CardContent>
     </React.Fragment>

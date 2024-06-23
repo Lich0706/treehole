@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -7,40 +7,60 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
+import axios from 'axios';
+
 import MessageList from '@/components/MessageList';
 import SearchBar from '@/components/SearchBar';
-import { isSignedIn } from '@/utils/cookie';
+import { API_BASE_URL } from '@/config/config';
+import { getCookie, isSignedIn } from '@/utils/cookie';
 
-interface DataItem {
-  pid: number;
-  content: string;
-  date: string;
+export interface PostItem {
+  ID: number;
+  Content: string;
+  CreatedAt: string;
 }
-
-const data: DataItem[] = [
-  { pid: 1, content: 'This is the first #2 content', date: '2024-06-01' },
-  { pid: 2, content: 'This is the second content', date: '2024-06-01' },
-  { pid: 3, content: 'Another content here', date: '2024-06-01' },
-  // More content...
-];
 
 function TreeHole() {
   const signedIn = isSignedIn();
 
-  const [searchResults, setSearchResults] = useState(data);
+  const [allPosts, setAllPosts] = useState<PostItem[]>([]);
+  const [searchResults, setSearchResults] = useState<PostItem[]>([]);
 
   const handleSearch = (term: string) => {
     if (term === '') {
-      setSearchResults(data);
+      setSearchResults(allPosts);
     } else {
-      const results = data.filter(
-        (item) =>
-          item.content.toLowerCase().includes(term.toLowerCase()) ||
-          item.pid.toString().includes(term),
-      );
-      setSearchResults(results);
+      if (allPosts !== null) {
+        const results = allPosts.filter(
+          (item) =>
+            item.Content.toLowerCase().includes(term.toLowerCase()) ||
+            item.ID.toString().includes(term),
+        );
+        setSearchResults(results);
+      }
     }
   };
+
+  const getAllPosts = () => {
+    axios
+      .get(`${API_BASE_URL}/post/list`, {
+        headers: { token: getCookie('token') },
+      })
+      .then(
+        (response) => {
+          console.log(response.data);
+          setAllPosts(response.data.data);
+          setSearchResults(response.data.data);
+        },
+        (error) => {
+          console.log('[DEBUG] TODO', error);
+        },
+      );
+  };
+
+  useEffect(() => {
+    getAllPosts();
+  }, []);
 
   return (
     <Container sx={{ height: '100%' }}>
